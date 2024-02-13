@@ -89,6 +89,14 @@
         "GePedBoneIndex",
         "NetworkRequestControlOfNetworkId",
         "GetPedBoneIndex",
-        "AddEventHandler"
+        "AddEventHandler",
+        "AddRelationshipGroup",
+        "RemoveRelationshipGroup",
+        "SetPedRelationshipGroupHash",
+        "SetRelationshipBetweenGroups",
+        "SetEntityCanBeDamagedByRelationshipGroup",
+        "SetCanAttackFriendly",
+        "NetworkSetFriendlyFireOption",
+        "TriggerEvent"
     ]
 }
