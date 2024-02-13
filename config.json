@@ -7,7 +7,9 @@
     "debug",
     "ui",
     "framework",
+    "organizations",
     "string",
+    "table",
     "invoice",
     "database",
     "translate"
