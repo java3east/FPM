@@ -9,5 +9,7 @@ The target of this resource is to provide clean & bug free code for easier devel
 This resource provides *"modules"* which can be easily installed into a project by running the *FPM.jar* file.<br>
 These modules include a ***framework*** module, which contains function translations between frameworks like *esx* and *qb*, making the writing of multi-framework compatible resources easier.<br>
 <br>
+*For the best expeareance I recommend installing the Lua plugin in VSCode.*<br>
+<br>
 **If you have questions feel free to contact me:**<br>
 *discord: java3east*
