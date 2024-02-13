@@ -442,7 +442,9 @@ function ORM:query(table)
     else
         data = self.data
     end
+    
     local results = MySQL.query.await(self.sql, data)
+
     if results and type(results) == "table" then
         for _, result in ipairs(results) do
             for key, func in pairs(self.format) do
@@ -461,4 +463,28 @@ function ORM:query(table)
         end
     end
     return results
+end
+
+
+function ORM:insertSQL(table)
+    if type(self.sql) == "table" then
+        self.sql = self:prepare()
+    end
+    local data = {}
+    if table then
+        for index, value in ipairs(self.data) do
+            for key, val in pairs(table) do
+                if type(val) == "table" or type(val) == "vector3" then
+                    val = json.encode(val)
+                    table[key] = val
+                end
+                value = string.gsub(value, key, val)
+            end
+            data[index] = value
+        end
+    else
+        data = self.data
+    end
+    
+    return MySQL.insert.await(self.sql, data)
 end
