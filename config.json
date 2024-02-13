@@ -1,0 +1,15 @@
+{
+  "PROJECTS_FOLDER": "C:\\Users\\flori\\Documents\\fpm",
+  "MODULE_FOLDER": "./modules",
+  "MODULES": [
+    "class",
+    "basic-meta",
+    "debug",
+    "ui",
+    "framework",
+    "string",
+    "invoice",
+    "database",
+    "translate"
+  ]
+}

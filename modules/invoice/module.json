@@ -1,0 +1,3 @@
+{
+    "require": [ "class", "database", "string", "framework" ]
+}
