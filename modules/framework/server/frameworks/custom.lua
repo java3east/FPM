@@ -20,15 +20,25 @@ function Framework:getPlayerFromId(id) return nil end
 ---@return Player|nil player the player object
 function Framework:getPlayerFromIdentifier(identifier) return nil end
 
+---Returns the frameworks account name for a given FPM account name.
+---@param account FPMAccount fpm account name
+---@return string name
+function Framework:getAccountName(account) return account end
+
+---Returns the FPM account name from the frameworks account name.
+---@param account string framework account name.
+---@return FPMAccount name
+function Framework:getFPMAccountName(account) return account end
+
 ---Returns a OfflinePlayer object. Functions of this object get or set values in the database and should only be used if the player is not online.
 ---@param identifier string the identifier of the player
----@return OfflinePlayer|nil offlinePlayer
-function Framework:getOfflinePlayer(identifier) return nil end
+---@return OfflinePlayer offlinePlayer
+function Framework:getOfflinePlayer(identifier) return OfflinePlayer:new(identifier) end
 
 ---Add money to the players account.
 ---@param account string the name of the account to add the money to.
 ---@param amount integer the amount of money to add to the account.
-function Player:giveAccountMoney(account, amount) end
+function Player:addAccountMoney(account, amount) end
 
 ---Remove a given amount of money from the players account
 ---@param account string the name of the account to remove the money from.
@@ -66,16 +76,16 @@ function Player:getAccountMoney(account) return 0 end
 if ORM == nil then return end
 
 ---Get the amount of money this player has.
----@param account string the name of the account.
+---@param account FPMAccount the name of the account.
 ---@return integer amount the amount of money on that account.
 function OfflinePlayer:getAccountMoney(account) return 0 end
 
 ---Add money to a given account of the player.
----@param account string the account to add the money to.
+---@param account FPMAccount the account to add the money to.
 ---@param amount integer the amount of money to add.
 function OfflinePlayer:addAccountMoney(account, amount) end
 
 ---Remove money from a given account of the player.
----@param account string the name of the account to remove the money from.
+---@param account FPMAccount the name of the account to remove the money from.
 ---@param amount integer the amount of money to remove.
 function OfflinePlayer:removeAccountMoney(account, amount) end

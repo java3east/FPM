@@ -23,17 +23,45 @@ end
 ---@return Player|nil player the player object
 function Framework:getPlayerFromIdentifier(identifier) return nil end
 
+---Returns the frameworks account name for a given FPM account name.
+---@param account FPMAccount fpm account name
+---@return string name
+function Framework:getAccountName(account)
+    -- check default accounts
+    if account == FPMAccount.MONEY then return "cash"
+    elseif account == FPMAccount.BANK then return "bank"
+    elseif account == FPMAccount.BLACK_MONEY then return "crypto" end
+
+    -- return special accounts
+    return account
+end
+
+---Returns the FPM account name from the frameworks account name.
+---@param account string framework account name.
+---@return FPMAccount name
+function Framework:getFPMAccountName(account)
+    -- check default accounts
+    if account == "cash" then return FPMAccount.MONEY
+    elseif account == "bank" then return FPMAccount.BANK
+    elseif account == "crypto" then return FPMAccount.BLACK_MONEY end
+
+    -- return special accounts
+    return account
+end
+
 ---Returns a OfflinePlayer object. Functions of this object get or set values in the database and should only be used if the player is not online.
 ---@param identifier string the identifier of the player
----@return OfflinePlayer|nil offlinePlayer
+---@return OfflinePlayer offlinePlayer
 function Framework:getOfflinePlayer(identifier)
     return OfflinePlayer:new(identifier)
 end
 
+function Framework:getOrganization(name) return nil end
+
 ---Add money to the players account.
 ---@param account string the name of the account to add the money to.
 ---@param amount integer the amount of money to add to the account.
-function Player:giveAccountMoney(account, amount)
+function Player:addAccountMoney(account, amount)
     local qPlayer = self:getFrameworkPlayer()
     qPlayer.Functions.AddMoney(account, amount)
 end
@@ -88,17 +116,50 @@ end
 -- If the module dose not exist, ignore the following part
 if ORM == nil then return end
 
+OfflinePlayer.addORM('getAccounts', ORM:New('players')
+    :select()
+        :column('money')
+    :where()
+        :column('citizenid'):equals('@identifier')
+    :first()
+    :applyOnResult('money', json.decode)
+    :prepare()
+)
+
+OfflinePlayer.addORM('setAccounts', ORM:New('players')
+    :update()
+        :column('money'):value('@accounts')
+    :where()
+        :column('citizenid'):equals('@identifier')
+    :prepare()
+)
+
 ---Get the amount of money this player has.
----@param account string the name of the account.
+---@param account FPMAccount the name of the account.
 ---@return integer amount the amount of money on that account.
-function OfflinePlayer:getAccountMoney(account) return 0 end
+function OfflinePlayer:getAccountMoney(account)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+
+    -- get accounts
+    local accounts = OfflinePlayer.getORM('getAccounts'):query({ ['@identifier'] = self.__identifier })
+
+    -- return result
+    return accounts[account]
+end
 
 ---Add money to a given account of the player.
----@param account string the account to add the money to.
+---@param account FPMAccount the account to add the money to.
 ---@param amount integer the amount of money to add.
-function OfflinePlayer:addAccountMoney(account, amount) end
+function OfflinePlayer:addAccountMoney(account, amount)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+end
 
 ---Remove money from a given account of the player.
----@param account string the name of the account to remove the money from.
+---@param account FPMAccount the name of the account to remove the money from.
 ---@param amount integer the amount of money to remove.
-function OfflinePlayer:removeAccountMoney(account, amount) end
+function OfflinePlayer:removeAccountMoney(account, amount)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+end

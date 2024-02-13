@@ -22,21 +22,39 @@ end
 ---@param identifier string the players identifier
 ---@return Player|nil player the player object
 function Framework:getPlayerFromIdentifier(identifier)
+    -- get xPlayer / fPlayer
     local xPlayer = ESX.getPlayerFromIdentifier(identifier)
+    
+    -- make sure player exists
+    if xPlayer == nil then return nil end
+
+    -- create a new Player object
     return Player:new(xPlayer.source, xPlayer)
 end
 
 ---Returns a OfflinePlayer object. Functions of this object get or set values in the database and should only be used if the player is not online.
 ---@param identifier string the identifier of the player
----@return OfflinePlayer|nil offlinePlayer
+---@return OfflinePlayer offlinePlayer
 function Framework:getOfflinePlayer(identifier)
     return OfflinePlayer:new(identifier)
 end
 
+---Returns the frameworks account name for a given FPM account name.
+---FPM accounts == esx accounts so just return the given account
+---@param account FPMAccount fpm account name
+---@return string name
+function Framework:getAccountName(account) return account end
+
+---Returns the FPM account name from the frameworks account name.
+---FPM accounts == esx accounts so just return the given account
+---@param account string framework account name.
+---@return FPMAccount name
+function Framework:getFPMAccountName(account) return account end
+
 ---Add money to the players account.
 ---@param account string the name of the account to add the money to.
 ---@param amount integer the amount of money to add to the account.
-function Player:giveAccountMoney(account, amount)
+function Player:addAccountMoney(account, amount)
     local xPlayer = self:getFrameworkPlayer()
     xPlayer.addAccountMoney(account, amount)
 end
@@ -104,23 +122,65 @@ OfflinePlayer.addORM('getAccounts', ORM:New('users')
     :prepare()
 )
 
+OfflinePlayer.addORM('setAccounts', ORM:New('users')
+    :update()
+        :column('accounts'):value('@accounts')
+    :where()
+        :column('identifier'):equals('@identifier')
+    :prepare()
+)
+
 ---Get the amount of money this player has.
----@param account string the name of the account.
+---@param account FPMAccount the name of the account.
 ---@return integer amount the amount of money on that account.
 function OfflinePlayer:getAccountMoney(account)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+
     -- run orm query
-    local result = OfflinePlayer.getORM('getAccounts'):query({ self.__identifier })
+    local result = OfflinePlayer.getORM('getAccounts'):query({ ['@identifier'] = self.__identifier })
 
     -- return the result
     return result.accounts[account]
 end
 
 ---Add money to a given account of the player.
----@param account string the account to add the money to.
+---@param account FPMAccount the account to add the money to.
 ---@param amount integer the amount of money to add.
-function OfflinePlayer:addAccountMoney(account, amount) end
+function OfflinePlayer:addAccountMoney(account, amount)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+
+    -- load accounts from database
+    local accounts = OfflinePlayer.getORM('getAccounts'):query({ ['@identifier'] = self.__identifier })
+
+    -- get account money
+    local money = accounts[account]
+
+    -- add the given amount
+    accounts[account] = money + amount
+
+
+    -- save in database
+    OfflinePlayer.getORM('setAccounts'):query({ ['@accounts'] = json.encode(accounts) })
+end
 
 ---Remove money from a given account of the player.
----@param account string the name of the account to remove the money from.
+---@param account FPMAccount the name of the account to remove the money from.
 ---@param amount integer the amount of money to remove.
-function OfflinePlayer:removeAccountMoney(account, amount) end
+function OfflinePlayer:removeAccountMoney(account, amount)
+    -- get framework account name
+    account = Framework:getAccountName(account)
+
+    -- load accounts from database
+    local accounts = OfflinePlayer.getORM('getAccounts'):query({ ['@identifier'] = self.__identifier })
+
+    -- get account money
+    local money = accounts[account]
+
+    -- add the given amount
+    accounts[account] = money - amount
+
+    -- save in database
+    OfflinePlayer.getORM('setAccounts'):query({ ['@accounts'] = json.encode(accounts) })
+end
