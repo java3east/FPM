@@ -1,5 +1,5 @@
 {
-  "PROJECTS_FOLDER": "C:\\Users\\flori\\Documents\\fpm",
+  "PROJECTS_FOLDER": "./projects",
   "MODULE_FOLDER": "./modules",
   "MODULES": [
     "class",
