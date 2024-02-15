@@ -27,6 +27,19 @@ function Framework:triggerCallback(name, cb, ...) end
 function Framework:triggerSyncCallback(name, ...) end
 
 
+---Returns the frameworks account name for a given FPM account name.
+---FPM accounts == esx accounts so just return the given account
+---@param account FPMAccount fpm account name
+---@return string name
+function Framework:getAccountName(account) return account end
+
+---Returns the FPM account name from the frameworks account name.
+---FPM accounts == esx accounts so just return the given account
+---@param account string framework account name.
+---@return FPMAccount name
+function Framework:getFPMAccountName(account) return account end
+
+
 ---Check if the player has loaded into his character.
 ---@return boolean loaded true if the player is completely loaded.
 function Framework:isPlayerLoaded() return false end
@@ -38,7 +51,7 @@ function Framework:awaitPlayerLoaded() end
 
 ---Returns the ammount of money the player has. For security reasons, the server-side function should
 ---also be called, when the player is trying, for example, to buy something.
----@param account string the name of the account to get the ammount of money from.
+---@param account FPMAccount the name of the account to get the ammount of money from.
 ---@return integer amount the amount of money on that account.
 function Framework:getAccountMoney(account) return 0 end
 
@@ -58,7 +71,7 @@ function Framework:getInventory() return nil end
 function Framework:getLoadout() return nil end
 
 ---Returns the players identity, with gender, height, firstname and lastname.
----return format: `{sex: boolean, height: integer, firstname: string, lastname: string}`
+---return format: `{sex: Sex, height: integer, firstname: string, lastname: string}`
 ---@return FrameworkIdentity|nil
 function Framework:getIdentity() return nil end
 
