@@ -9,6 +9,7 @@ CLASS.__index = CLASS
 ---@generic T
 ---@param name `T`
 ---@param ... CLASS the parent classes, `CLASS` will be added automatically.
+---@return CLASS class
 function CLASS:new(name, ...)
     local object = {}
     local parents = table.pack(...)
