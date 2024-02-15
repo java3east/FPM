@@ -51,6 +51,15 @@ function Framework:getAccountName(account) return account end
 ---@return FPMAccount name
 function Framework:getFPMAccountName(account) return account end
 
+---Register a new ServerCallback.
+---@param name string the name of the callback.
+---@param func function the callback function. `function(source : integer, ... : any)`
+function Framework:registerCallback(name, func)
+    ESX.RegisterServerCallback(name, function(source, cb, ...)
+        cb(func(source, ...))
+    end)
+end
+
 ---Add money to the players account.
 ---@param account string the name of the account to add the money to.
 ---@param amount integer the amount of money to add to the account.

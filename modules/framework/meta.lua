@@ -15,10 +15,13 @@
 ---@field grade FrameworkGradeData  grade data
 
 ---@class FrameworkInventory : {[string]: integer}
----@class FrameworkLoadout : {[string]: integer}
 
 ---@class FrameworkIdentity
 ---@field sex boolean the sex of the player
 ---@field height integer the height of the player
 ---@field firstname string the players firstname
 ---@field lastname string the players lastname
+
+---@class FrameworkWeapon
+---@field ammo integer
+---@field components Array<string>

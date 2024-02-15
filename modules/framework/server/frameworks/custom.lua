@@ -30,6 +30,11 @@ function Framework:getAccountName(account) return account end
 ---@return FPMAccount name
 function Framework:getFPMAccountName(account) return account end
 
+---Register a new ServerCallback.
+---@param name string the name of the callback.
+---@param func function the callback function. `function(source : integer, ... : any)`
+function Framework:registerCallback(name, func) end
+
 ---Returns a OfflinePlayer object. Functions of this object get or set values in the database and should only be used if the player is not online.
 ---@param identifier string the identifier of the player
 ---@return OfflinePlayer offlinePlayer

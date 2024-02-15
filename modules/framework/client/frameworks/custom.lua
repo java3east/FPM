@@ -66,8 +66,7 @@ function Framework:getJob() return nil end
 function Framework:getInventory() return nil end
 
 ---Returns the players weapons and ammo. For security reasons this should also be checked on the server.<br>
----return format: `{ [weaponName : string] = ammoCount : integer }`
----@return FrameworkLoadout|nil loadout
+---@return Dictionary<FrameworkWeapon>|nil loadout
 function Framework:getLoadout() return nil end
 
 ---Returns the players identity, with gender, height, firstname and lastname.

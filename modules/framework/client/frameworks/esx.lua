@@ -110,7 +110,7 @@ function Framework:getInventory()
 end
 
 ---Returns the players weapons and ammo. For security reasons this should also be checked on the server.<br>
----@return FrameworkLoadout|nil loadout
+---@return Dictionary<FrameworkWeapon>|nil loadout
 function Framework:getLoadout()
     local weapons = {}
     for _, weapon in ipairs(ESX.GetPlayerData().loadout) do
