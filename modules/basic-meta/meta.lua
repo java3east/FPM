@@ -1,7 +1,7 @@
 ---@generic T
----@class Array : {[integer] : T}
+---@class Array<T> : {[integer] : T}
 
 ---@generic T
----@class Dictionary : {[string] : T}
+---@class Dictionary<T> : {[string] : T}
 
 ---@class Open : {[string] : {['server'|'client'] : {[string] : function}}}
