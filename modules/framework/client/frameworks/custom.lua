@@ -5,8 +5,8 @@ if not (Config.framework.name == "CUSTOM") then return end
 
 --[[  <<< LOAD YOUR FRAMEWORK RESOURCE HERE >>>  ]] --
 
----@class CFramework
-Framework = {}
+---@class CFramework: CLASS
+Framework = CLASS:new('CFramework')
 
 ---Show a notification with a message to the player.
 ---@param message string the message of the notification.

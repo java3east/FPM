@@ -5,8 +5,8 @@ if not (Config.framework.name == "ESX") then return end
 
 local ESX = exports[Config.framework.resource or 'es_extended']:getSharedObject()
 
----@class CFramework
-Framework = {}
+---@class CFramework: CLASS
+Framework = CLASS:new('CFramework')
 
 ---Returns the frameworks account name for a given FPM account name.
 ---FPM accounts == esx accounts so just return the given account
@@ -73,7 +73,7 @@ function Framework:awaitPlayerLoaded()
     local done = false
 
     -- event instead of constant self:isPlayerLoaded() for performace reasons
-    AddEventHandler('esx:playerLoaded', function()
+    RegisterNetEvent('esx:playerLoaded', function()
         done = true
     end)
 
@@ -139,7 +139,7 @@ end
 ---This function should be used by HUDs.
 ---@param func function the function that will be called when the amount of money on an account changes. ```function(account : FPMAccount, money : integer)```
 function Framework:onAccountMoneyUpdate(func)
-    AddEventHandler("esx:setAccountMoney", function(account)
+    RegisterNetEvent("esx:setAccountMoney", function(account)
         func(Framework:getFPMAccountName(account.name), account.money)
     end)
 end

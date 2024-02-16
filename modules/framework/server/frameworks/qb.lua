@@ -5,8 +5,8 @@ if not (Config.framework.name == "QB") then return end
 
 QBCore = exports[Config.framework.resource or 'qb-core']:GetCoreObject()
 
----@class SFramework
-Framework = {}
+---@class SFramework : CLASS
+Framework = CLASS:new('SFramework')
 
 ---Returns a new Player object. The player object contains the serverId of the player and his frameworkPlayerObject (in esx also known as xPlayer).
 ---Any other data, can be retrieved by calling a function of that object.
