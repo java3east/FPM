@@ -13,6 +13,8 @@ CLASS.__index = CLASS
 function CLASS:new(name, ...)
     local object = {}
     local parents = table.pack(...)
+    table.insert(parents, CLASS)
+
 
     -- set meta table
     setmetatable(object, {__index = function(table, key)
