@@ -54,3 +54,7 @@ function Translator:translate(key, replacements)
     -- return
     return value
 end
+
+function Translator:raw()
+    return self.__translations
+end
