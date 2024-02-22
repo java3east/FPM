@@ -97,6 +97,17 @@
         "SetEntityCanBeDamagedByRelationshipGroup",
         "SetCanAttackFriendly",
         "NetworkSetFriendlyFireOption",
-        "TriggerEvent"
+        "TriggerEvent",
+        "SetPedHeadBlendData",
+        "GetPedHeadBlendData",
+        "GetPedFaceFeature",
+        "SetPedFaceFeature",
+        "IsModelInCdimage",
+        "IsModelValid",
+        "SetPlayerModel",
+        "PlayerId",
+        "SetModelAsNoLongerNeeded",
+        "SetPedComponentVariation",
+        "GetAnimDuration"
     ]
 }
