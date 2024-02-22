@@ -14,9 +14,6 @@ function IUI.on(name, func)
         -- response data
         local callbackData = { code = 200, data = result }
 
-        -- debug
-        debug('calling back: ' .. json.encode(callbackData))
-
         -- callback
         cb(callbackData)
     end)
@@ -29,11 +26,20 @@ function IUI.send(name, data)
     -- the message table
     local message = { name = name, data = data }
 
-    -- debug
-    debug('sending: ' .. json.encode(message))
-
     -- send the message to the UI
     SendNUIMessage(message)
+end
+
+---Initialize the UI, this will send translations and colors
+function IUI:init()
+    self.send('translate', {
+        translations = Translator.get():raw()
+    })
+    self.send('color', {
+        dark = Config.ui.colors.dark,
+        normal = Config.ui.colors.normal,
+        light = Config.ui.colors.light
+    })
 end
 
 function IUI:new() end
