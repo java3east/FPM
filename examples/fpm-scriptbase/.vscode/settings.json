@@ -1,0 +1,29 @@
+{
+    "Lua.diagnostics.globals": [
+        "GetResourceState",
+        "class",
+        "TriggerClientEvent",
+        "RegisterNetEvent",
+        "TriggerEvent",
+        "Wait",
+        "TriggerServerEvent",
+        "source",
+        "GetCurrentResourceName",
+        "DosePlayerExist",
+        "GetPlayerName",
+        "AddEventHandler",
+        "NetworkGetNetworkIdFromEntity",
+        "GetPlayerPed",
+        "PlayerPedId",
+        "server_scripts",
+        "client_scripts",
+        "shared_scripts",
+        "version",
+        "author",
+        "description",
+        "fx_version",
+        "game",
+        "name",
+        "CreateThread"
+    ]
+}
